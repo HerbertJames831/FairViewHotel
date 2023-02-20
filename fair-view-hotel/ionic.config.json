@@ -1,0 +1,7 @@
+{
+  "name": "FairViewHotel",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
