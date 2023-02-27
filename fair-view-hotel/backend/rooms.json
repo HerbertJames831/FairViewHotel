@@ -1,0 +1,70 @@
+[
+    {
+        "roomID": 101,
+        "roomPrice": 600,
+        "roomDates": [
+            "01-01-2023",
+            "02-01-2023"
+        ],
+        "roomBeds": [
+            {
+                "bedType": "Double",
+                "bedSleeps": 2
+            },
+            {
+                "bedType": "Single",
+                "bedSleeps": 1
+            }
+        ]
+    },
+
+    {
+        "roomID": 201,
+        "roomPrice": 800,
+        "roomDates": [
+            "03-01-2023",
+            "04-01-2023"
+        ],
+        "roomBeds": [
+            {
+                "bedType": "Double",
+                "bedSleeps": 2
+            },
+            {
+                "bedType": "Double",
+                "bedSleeps": 2
+            }
+        ]
+    },
+
+    {
+        "roomID": 301,
+        "roomPrice": 700,
+        "roomDates": [
+            "05-01-2023",
+            "06-01-2023"
+        ],
+        "roomBeds": [
+            {
+                "bedType": "Double",
+                "bedSleeps": 2
+            }
+        ]
+    },
+
+    {
+        "roomID": 401,
+        "roomPrice": 300,
+        "roomDates": [
+            "04-01-2023",
+            "05-01-2023"
+        ],
+        "roomBeds": [
+            {
+                "bedType": "Single",
+                "bedSleeps": 1
+            }
+        ]
+    }
+
+]
