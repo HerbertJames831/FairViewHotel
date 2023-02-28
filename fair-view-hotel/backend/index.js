@@ -45,7 +45,19 @@ app.get('/rooms', (req, res) => {
 
 })
 
-app.get('/roomsGet', (req, res) => {
+app.get('/roomsGetSQL', (req, res) => {
+    mysqlDB.getRooms()
+        .then((result) => {
+            res.send(result)
+            console.log(result)
+        })
+        .catch((error) => {
+            res.send(error)
+        })
+
+})
+
+app.get('/roomsGetMongo', (req, res) => {
     mongoDB.getRoomsMongo()
         .then((result) => {
             res.send(result)
