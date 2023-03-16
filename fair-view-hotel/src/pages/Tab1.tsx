@@ -41,7 +41,7 @@ const Tab1: React.FC = () => {
     roomBeds.forEach((bed: RoomBed) => {
       bedTypes += bed.bedType + ', ';
     });
-    // Remove the last comma and space
+    // Remove The comma and space for the final addition
     bedTypes = bedTypes.slice(0, -2);
     return bedTypes;
   }

@@ -1,0 +1,51 @@
+## Current Tables
+    Current Structure of the SQL database for reference as of 07/03
+- ### Hotel 
+    - **h_id** *VARCHAR(10)*
+    - **h_name** *VARCHAR(50)*
+    - **h_type** *VARCHAR(50)*
+    - **h_address** *VARCHAR(90)*
+- ### Customers
+    - **customer_id** *INT*
+    - **first_name** *VARCHAR(50)*
+    - **last_name** *VARCHAR(50)*
+    - **gender** *VARCHAR(45)*
+    - **address** *VARCHAR(70)*
+    - **mobile_num** *INT*
+    - **email** *VARCHAR(50)*
+    - **hotel_h_id** *VARCHAR(50)*
+- ### Payments
+    - **payment_id** *VARCHAR(4)*
+    - **customer_id** *INT*
+    - **payment_date** *VARCHAR(50)*
+    - **payment_amount** *VARCHAR(10)*
+- ### Booking
+    - **booking_id** *INT*
+    - **room_id** *VARCHAR(3)*
+    - **customer_id** *INT*
+    - **booking date** *DATE*
+    - **check_in** *DATETIME*
+    - **check_out** *DATETIME*
+- ### Employees
+	- **employee_id** *INT*
+	- **first_name** *VARCHAR(50)*
+	- **last_name** *VARCHAR(50)*
+	- **gender** *VARCHAR(50)*
+	- **address** *VARCHAR(50)*
+	- **mobile_number** *INT*
+	- **email** *VARCHAR(50)*
+	- **department** *VARCHAR(50)*
+	- **Hotel_h_id** *VARCHAR(50)*
+- ### Rooms
+    - **room_id** *VARCHAR(3)*
+    - **room_number** *INT*
+    - **room_cost** *VARCHAR(10)*
+    - **room_type** *VARCHAR(50)*
+    - **hotel_h_id** *VARCHAR(10)*
+- ### Services
+    - **sid** *VARCHAR(3)*
+    - **** *VARCHAR(50)*
+    - **** *VARCHAR(10)*
+- ### Invoice
+    - **invoice_id** *INT*
+    - **status** *VARCHAR(50)*
