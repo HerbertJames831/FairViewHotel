@@ -1,6 +1,6 @@
 // Imports
 import React, { useState } from "react";
-import { IonContent } from '@ionic/react';
+import RoomCard from "./roomCard";
 
 // A Search Component For Checking Rooms Available For Booking
 const DateRangePicker: React.FC = () => {
@@ -65,9 +65,10 @@ const DateRangePicker: React.FC = () => {
   return (
     <div>
       {/* A Search Bar to Choose To dates Display available rooms underneath when submitted */}
+      <br/>
       <div>
         <form onSubmit={handleSearch}>
-          
+
           <label htmlFor="check-in">Check In: </label>
           <input
             type="date"
@@ -89,12 +90,29 @@ const DateRangePicker: React.FC = () => {
           <button type="submit">Search</button>
 
         </form>
-        </div>
+      </div>
 
       <br />
 
       {/* This Will Initially Have No rooms to display but once the search is submitted it will update with available rooms */}
+
       <div>
+        {rooms.map(room => (
+          <RoomCard
+            key = {room.room_id}
+            room_id = {room.room_id}
+            room_number = {room.room_number}
+            room_cost = {room.room_cost}
+            room_type = {room.room_type}
+            hotel_h_id = {room.hotel_h_id}
+            checkInDate={checkInDate}
+            checkOutDate={checkOutDate}
+          />
+        ))}
+      </div>
+
+      {/* Older Way to Display the Rooms Now A Card Component is called */}
+      {/* <div>
         {rooms.map(room => (
           <div key={room.room_id} className="RoomsDisplay">
             <p>Room Number: {room.room_number}</p>
@@ -104,7 +122,7 @@ const DateRangePicker: React.FC = () => {
             <br></br>
           </div>
         ))}
-      </div>
+      </div> */}
 
     </div>
   );

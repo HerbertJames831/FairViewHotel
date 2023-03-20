@@ -107,7 +107,18 @@ app.post("/availableRoomsSql", (req, res) => {
     mysqlDB.getRoomBookedDates(checkInDate, checkOutDate)
         .then((result) =>{
             res.send(result)
-            console.log('Seach Successful.')})
+            console.log('Search Successful.')})
+        .catch((error) => {
+            res.send(error)
+        })
+})
+
+// /bookRoomSql recieves check in and out with the rooms Id for booking
+app.post("/bookRoomSql", (req, res) => {
+    const { checkinInFormat, checkinOutFormat, roomId } = req.body;
+
+    mysqlDB.bookSelectedRoom( checkinInFormat, checkinOutFormat, roomId)
+        .then(console.log('Booking Successful.'))
         .catch((error) => {
             res.send(error)
         })
