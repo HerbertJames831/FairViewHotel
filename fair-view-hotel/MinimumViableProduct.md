@@ -1,0 +1,16 @@
+# Minimum Viable Product Requirements
+- ## Front End
+    - Welcome Page: *Basic Hotel Info and welcome*
+    - Facilities page: *Show Brief Description of Hotels Various Facilities*
+    - Booking Page: *Search and Book Rooms*
+    - User Page: *User Details, Bookings*
+    - Link to site map: [Link](https://www.gloomaps.com/glZiizjhkT)
+- ## User Login
+    - Secure login using email and password
+    - Allow the user to create an new accounnt or edit their existing one
+    - Allow a user to see their Current Bookings
+    - Allow the user to cancel their current bookings.
+- ## Book Room
+    - Search which rooms are given on specified dates
+    - Select a room and book it
+    - Booking is added to the booking table of the database
