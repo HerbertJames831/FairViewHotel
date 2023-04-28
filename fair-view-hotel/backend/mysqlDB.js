@@ -6,17 +6,17 @@ var mysqlPool;
 
 // Create Pool Currently Logging into the Test SQL Host
 mysql.createPool({
-    user: 'sql8601019',
-    password: 'i93XJlNwEf',
-    host: 'sql8.freesqldatabase.com',
-    database: 'sql8601019'
+    user: 'admin',
+    password: 'DaithiHerbert!',
+    host: 'hoteldb.ct71pby1wuzq.us-east-1.rds.amazonaws.com',
+    database: 'fairviewhotel'
 }).then(data => { mysqlPool = data }).catch((error) => { console.log(error) })
 
 // Function to query all data from the roomsTest table earliest test version of the table just used to check if the connection to the online db works
 var getRooms = function () {
     return new Promise((resolve, reject) => {
         mysqlPool.query('SELECT * FROM roomsTest')
-            .then((data) => { resolve(data); console.log(data) }).catch((error) => { reject(error) })
+            .then((data) => { resolve(data); /* console.log(data) */ }).catch((error) => { reject(error) })
     })
 }
 
@@ -24,7 +24,7 @@ var getRooms = function () {
 var getRoomsTest2 = function () {
     return new Promise((resolve, reject) => {
         mysqlPool.query('SELECT * FROM rooms')
-            .then((data) => { resolve(data); console.log(data) }).catch((error) => { reject(error) })
+            .then((data) => { resolve(data); /* console.log(data) */ }).catch((error) => { reject(error) })
     })
 }
 
@@ -48,7 +48,7 @@ var getRoomBookedDates = function (checkIn, checkOut) {
 }
 
 // Adds a booking Value to The Booking SQL table
-var bookSelectedRoom = function (checkIn, checkOut, roomId) {
+var bookSelectedRoom = function (checkIn, checkOut, roomId, customer_id) {
     return new Promise((resolve, reject) => {
         // Get Todays Date
         const todaysDate = new Date();
@@ -60,7 +60,7 @@ var bookSelectedRoom = function (checkIn, checkOut, roomId) {
 
         // Recieve new unique booking ID in promise form
         getNewBookingId().then((bookingId) => {
-            queryString = '(' + bookingId + ',\'' + roomId + '\',1, \'' + bookingDate + '\',\'' + checkIn + '\',\'' + checkOut + '\')';
+            queryString = '(' + bookingId + ',\'' + roomId + '\',\'' + customer_id + '\', \'' + bookingDate + '\',\'' + checkIn + '\',\'' + checkOut + '\')';
             console.log(queryString);
 
             // Log The Query to console for testing
@@ -99,6 +99,127 @@ function getNewBookingId() {
         throw error;
     });
 }
+// Function to check the given emailm and password with the databse to see if it is valid and return the customer Id if it is
+function loginCheck(email, password) {
+    return new Promise((resolve, reject) => {
+        // Check Login Details
+        mysqlPool.query('SELECT customer_id FROM customers WHERE email = ? AND password = ?', [email, password], (error, results) => {
+            if (error) {
+                console.log('SQL Error:', error.message);
+                reject(error);
+            } else {
+                if (results.length === 1) {
+                    // Login successful, return customer ID
+                    console.log(results[0].customer_id + ' Logged In')
+                    resolve(results[0].customer_id);
+                } else {
+                    // Invalid email or password, return unsuccessful login message
+                    console.log('Unsuccessful login No Matching Set');
+                    // Throw an error indicating invalid email or password
+                    reject(new Error('Invalid email or password'));
+                }
+            }
+        });
+    });
+}
+// Function to retrieve all the customer details of the given user
+function getUserDetails(customer_id) {
+    return new Promise((resolve, reject) => {
+        mysqlPool.query('SELECT * FROM customers where customer_id = ?', [customer_id])
+            .then((results) => { resolve(results[0]); })
+            .catch((error) => { reject(error); });
+    });
+}
+
+// Function to return all bookings that match a users customer Id
+function getUserBookings(customer_id) {
+    return new Promise((resolve, reject) => {
+        mysqlPool.query('SELECT * FROM booking WHERE customer_id = ? ORDER BY check_in DESC', [customer_id])
+            .then((data) => { resolve(data) }).catch((error) => { reject(error) })
+    })
+}
+// Function to delete a requested booking from the table for the user
+function cancelBooking(booking_id) {
+    return new Promise((resolve, reject) => {
+        mysqlPool.query('DELETE FROM booking WHERE booking_id = ?', [booking_id])
+            .then((data) => { resolve(data) }).catch((error) => { reject(error) })
+    })
+}
+// Function to update an existing users account details
+function updateUserDetails(customer_id, first_name, last_name, address, mobile_number, email) {
+    return new Promise((resolve, reject) => {
+        // Update customer details in the MySQL database
+        mysqlPool.query('UPDATE customers SET first_name = ?, last_name = ?, address = ?, mobile_number = ?, email = ? WHERE customer_id = ?',
+            [first_name, last_name, address, mobile_number, email, customer_id], (error, results) => {
+                if (error) {
+                    console.log('SQL Error:', error.message);
+                    reject(error);
+                } else {
+                    // Check if any rows were affected
+                    if (results.affectedRows > 0) {
+                        // Customer details updated successfully
+                        console.log('Customer Details Updated');
+                        resolve();
+                    } else {
+                        // Customer ID not found, return error message
+                        console.log('Customer ID not found');
+                        reject(new Error('Customer ID not found'));
+                    }
+                }
+            });
+    });
+}
+// Function to check what the next available possible and return it
+function getNewCustomerId() {
+    return new Promise((resolve, reject) => {
+        // Get all existing customer IDs from the MySQL database
+        mysqlPool.query('SELECT customer_id FROM customers', (error, results) => {
+            if (error) {
+                console.log('SQL Error:', error.message);
+                reject(error);
+            } else {
+                // Extract the customer IDs from the results and find the next ID
+                const customerIds = results.map(entry => entry.customer_id);
+                const newCustomerId = Math.max(...customerIds) + 1;
+                resolve(newCustomerId);
+            }
+        });
+    });
+}
+// Function to create a completely new entry in the customer table
+function createAccount(formData) {
+    const { firstName, lastName, gender, address, mobileNumber, email, password } = formData;
+    // get the next available Id
+    return getNewCustomerId().then(newCustomerId => {
+      return new Promise((resolve, reject) => {
+        // Insert customer details into the MySQL database
+        mysqlPool.query(
+          'INSERT INTO customers (customer_id, first_name, last_name, gender, address, mobile_number, email, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+          [newCustomerId, firstName, lastName, gender, address, mobileNumber, email, password],
+          (error, results) => {
+            if (error) {
+              console.log('SQL Error:', error.message);
+              reject(error);
+            } else {
+              // Check if the customer was inserted successfully
+              if (results.affectedRows > 0) {
+                // Customer details inserted successfully
+                console.log('Customer Details Inserted');
+                resolve();
+              } else {
+                // Customer details not inserted, return error message
+                console.log('Customer Details not Inserted');
+                reject(new Error('Customer Details not Inserted'));
+              }
+            }
+          }
+        );
+      });
+    }).catch(error => {
+      console.log(error);
+      throw error;
+    });
+  }
 
 // Export Functions
-module.exports = { getRooms, getRoomsTest2, getRoomBookedDates, bookSelectedRoom, getBookingIds }
+module.exports = { getRooms, getRoomsTest2, getRoomBookedDates, bookSelectedRoom, getBookingIds, loginCheck, getUserDetails, updateUserDetails, getUserBookings, cancelBooking,createAccount }

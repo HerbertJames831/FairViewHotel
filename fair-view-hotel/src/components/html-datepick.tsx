@@ -1,6 +1,7 @@
 // Imports
 import React, { useState } from "react";
 import RoomCard from "./roomCard";
+import { IonButton } from "@ionic/react";
 
 // A Search Component For Checking Rooms Available For Booking
 const DateRangePicker: React.FC = () => {
@@ -46,13 +47,13 @@ const DateRangePicker: React.FC = () => {
     })
       .then((response) => {
         // Log response and then Parse The Json For Testing
-        console.log(response);
+        //console.log(response);
         // Return Response
         return response.json();
       })
       .then((data) => {
         // Log Parsed JSON data To Conolse For Testing
-        console.log(data);
+        //console.log(data);
         // Updates the Rooms with new Data
         setRooms(data);
       })
@@ -65,7 +66,7 @@ const DateRangePicker: React.FC = () => {
   return (
     <div>
       {/* A Search Bar to Choose To dates Display available rooms underneath when submitted */}
-      <br/>
+      <br />
       <div>
         <form onSubmit={handleSearch}>
 
@@ -78,7 +79,7 @@ const DateRangePicker: React.FC = () => {
             onChange={(e) => setCheckInDate(e.target.value)}
           />
 
-          <label htmlFor="check-out">Check Out: </label>
+          <label htmlFor="check-out">  Check Out: </label>
           <input
             type="date"
             id="check-out"
@@ -86,8 +87,8 @@ const DateRangePicker: React.FC = () => {
             value={checkOutDate}
             onChange={(e) => setCheckOutDate(e.target.value)}
           />
-
-          <button type="submit">Search</button>
+          <br></br>
+          <IonButton type="submit">Search</IonButton>
 
         </form>
       </div>
@@ -99,19 +100,19 @@ const DateRangePicker: React.FC = () => {
       <div>
         {rooms.map(room => (
           <RoomCard
-            key = {room.room_id}
-            room_id = {room.room_id}
-            room_number = {room.room_number}
-            room_cost = {room.room_cost}
-            room_type = {room.room_type}
-            hotel_h_id = {room.hotel_h_id}
+            key={room.room_id}
+            room_id={room.room_id}
+            room_number={room.room_number}
+            room_cost={room.room_cost}
+            room_type={room.room_type}
+            hotel_h_id={room.hotel_h_id}
             checkInDate={checkInDate}
             checkOutDate={checkOutDate}
           />
         ))}
       </div>
 
-      {/* Older Way to Display the Rooms Now A Card Component is called */}
+      {/* Older Way to Display the Rooms Now A Card Component is called instead*/}
       {/* <div>
         {rooms.map(room => (
           <div key={room.room_id} className="RoomsDisplay">
@@ -128,5 +129,4 @@ const DateRangePicker: React.FC = () => {
   );
 };
 
-// Exports
 export default DateRangePicker;

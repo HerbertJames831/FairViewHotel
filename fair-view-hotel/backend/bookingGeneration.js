@@ -114,13 +114,12 @@ function populateRoomsArray() {
     console.log(roomArray.length + 'rooms generated.');
 }
 
-
 //Generates and Adds Bookings to a room if they are not clashing with previous bookings
 function generateValidBookings() {
     roomArray.forEach(room => {
         for (let i = 1; i < bookingsPerRoom + 1; i++) {
             customer_id = RandomNum(1, 11);
-            check_in = randomDate(new Date(2023, 0, 1), new Date(2023, 0, 30));
+            check_in = randomDate(new Date(2023, 3, 1), new Date(2023, 3, 30));
             check_in.setHours(15, 0, 0, 0);
             check_out = new Date(check_in.getTime() + RandomNum(1, 5) * 24 * 60 * 60 * 1000);
             check_out.setHours(11, 0, 0, 0);
@@ -150,7 +149,7 @@ function olderGenerationFucntion() {
         }
         room_id += roomNum;
         customer_id = RandomNum(1, 11);
-        check_in = randomDate(new Date(2023, 0, 1), new Date(2023, 0, 30));
+        check_in = randomDate(new Date(2023, 3, 1), new Date(2023, 3, 30));
         check_in.setHours(15, 0, 0, 0);
         check_out = new Date(check_in.getTime() + RandomNum(1, 5) * 24 * 60 * 60 * 1000);
         check_out.setHours(11, 0, 0, 0);

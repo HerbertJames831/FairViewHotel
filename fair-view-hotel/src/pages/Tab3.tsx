@@ -1,15 +1,16 @@
 import React from 'react';
-import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
 import DateRangePicker from '../components/html-datepick';
 
 const Tab3: React.FC = () => {
+  //Page For the Searching for bookings
   return (
     <IonPage>
 
       <IonHeader>
         <IonToolbar>
-          <IonTitle class="ion-text-center">Date Select</IonTitle>
+          <IonTitle class="ion-text-center">Booking</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -20,7 +21,7 @@ const Tab3: React.FC = () => {
             <IonTitle size="large">Date Select</IonTitle>
           </IonToolbar>
         </IonHeader>
-
+        {/* Import the Date Range Picker */}
         <DateRangePicker />
     
       </IonContent>

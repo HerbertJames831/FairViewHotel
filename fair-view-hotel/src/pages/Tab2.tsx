@@ -1,93 +1,64 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import './Tab2.css';
-
-import React, { useState, useEffect } from 'react';
 
 const Tab2: React.FC = () => {
 
-  interface Room {
-    roomNum: number;
-    roomBeds: number;
-    roomPrice: number;
-    roomAvailable: number;
-  }
-
-  interface RoomTest2 {
-    room_id: string;
-    room_number: number;
-    room_cost: string;
-    room_type: string;
-    hotel_h_id: string;
-  }
-
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [roomsTest2, setRooms2] = useState<RoomTest2[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:4001/roomsGetSQL")
-      .then(response => response.json())
-      .then(data => setRooms(data))
-      .catch(error => console.error(error));
-  }, []);
-
-  useEffect(() => {
-    fetch("http://localhost:4001/roomsGetTest2")
-      .then(response => response.json())
-      .then(data => setRooms2(data))
-      .catch(error => console.error(error));
-  }, []);
-
-  function checkRoomAvailable(available:number): string{
-    
-    var result:string = '';
-
-    if(available == 0){
-      result = 'Is Available';
-    }
-    else{
-      result = 'Is Not Available';
-    }
-
-    return result;
-
-  }
+  // A few cards to act as the home page, decorative and does not contain any functionality
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle class="ion-text-center">Hotel Rooms SQL</IonTitle>
+          <IonTitle class="ion-text-center">Fair View Hotel</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">SQL</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        {/* <IonContent fullscreen class="ion-text-center">
-          {rooms.map(room => (
-            <div key={room.roomNum}>
-              <p>Room ID: {room.roomNum}</p>
-              <p>Room Price: {room.roomPrice}</p>
-              <p>Room Beds: {room.roomBeds}</p>
-              <p>Room Availability: {checkRoomAvailable(room.roomAvailable)}</p>
-              <br></br>
-            </div>
-          ))}
-        </IonContent> */}
-        <IonContent fullscreen class="ion-text-center">
-          {roomsTest2.map(room => (
-            <div key={room.room_id}>
-              <p>Room Number: {room.room_number}</p>
-              <p>Room Price: {room.room_cost}</p>
-              <p>Room Type: {room.room_type}</p>
-              <p>Hotel ID: {room.hotel_h_id} (Currently Unimplemented)</p>
-              <br></br>
-            </div>
-          ))}
-        </IonContent>
+      <IonContent fullscreen class="ion-text-center">
+        <IonCard>
+          <img alt="Hotel Front" src="https://galwaybayfm.ie/wp-content/uploads/2022/09/Untitled-design-94.png" style={{ maxWidth: '500px' }} />
+          <IonCardHeader>
+            <IonCardTitle>Welcome to the Fair View Hotel</IonCardTitle>
+            <IonCardSubtitle>ATU Galways First and Best Partnered Hotel</IonCardSubtitle>
+          </IonCardHeader>
+
+          <IonCardContent>
+            Located right next door to ATU Galway campus, It's perfect for all your ATU Galway hotal based needs!
+          </IonCardContent>
+        </IonCard>
+
+        <IonCard>
+          <img alt="Fine dining" src="https://howtostartanllc.com/images/business-ideas/business-idea-images/fine-dining.jpg" style={{ maxWidth: '500px' }} />
+          <IonCardHeader>
+            <IonCardTitle>Fine Dining at Fair View Restauraunt</IonCardTitle>
+            <IonCardSubtitle>Experience our exquisite cuisine</IonCardSubtitle>
+          </IonCardHeader>
+          <IonCardContent>
+            Indulge in our delicious and meticulously crafted dishes prepared by our world-renowned chefs. We offer a wide range of cuisines to cater to every taste and preference. Come and enjoy an unforgettable fine dining experience at Fair View Hotel.
+          </IonCardContent>
+        </IonCard>
+
+        <IonCard>
+          <img alt="Pool and Gym Facilities" src="https://static.fivestar.ie/venues/9/3/93855/subpage/photos/1654182007-104.jpg" style={{ maxWidth: '500px' }} />
+          <IonCardHeader>
+            <IonCardTitle>Pool and Gym Facilities</IonCardTitle>
+            <IonCardSubtitle>5 star facilities!</IonCardSubtitle>
+          </IonCardHeader>
+          <IonCardContent>
+            Stay fit and refreshed with our state-of-the-art gym and sparkling pool. Relax and unwind after a busy day with a dip in the pool or an invigorating workout.
+          </IonCardContent>
+        </IonCard>
+
+        <IonCard>
+          <img alt="Spa" src="https://www.pillohotelashbourne.com/cmsGallery/imagerow/12276/resized/1600x800/mg_0903.jpg" style={{ maxWidth: '500px' }} />
+          <IonCardHeader>
+            <IonCardTitle>Five Star Spa</IonCardTitle>
+            <IonCardSubtitle>Relax and rejuvenate in our luxurious spa</IonCardSubtitle>
+          </IonCardHeader>
+
+          <IonCardContent>
+            Indulge in our range of treatments and therapies designed to soothe your body, mind, and soul.
+          </IonCardContent>
+        </IonCard>
+
       </IonContent>
     </IonPage>
   );
