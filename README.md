@@ -3,7 +3,7 @@ Group Project For Professional Practice in IT by <a href = "https://github.com/h
 
 The Projects Main goal is to create a funtioning hotel booking app that allows the user to book a room on a specified date.
 
-## Running Project App in it's Current State 28/02/23
+## Running Project App
 - Clone git repository
 - Change directory to FairViewHotel/fair-view-hotel/backend
 - Run `npm install ` in the command line
